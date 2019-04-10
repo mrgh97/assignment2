@@ -1,19 +1,20 @@
 package com.example.jpademo.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-public class Worker implements Serializable {
+public class Member implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final Long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Size(min=2,message = "First Name must be at least 2 characters.")
     @NotEmpty(message = "First Name is required.")
     private String firstName;
@@ -68,29 +69,12 @@ public class Worker implements Serializable {
 
     @Override
     public String toString() {
-        return "Worker{" +
+        return "Member{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", address='" + address + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Worker worker = (Worker) o;
-        return id == worker.id &&
-                Objects.equals(firstName, worker.firstName) &&
-                Objects.equals(lastName, worker.lastName) &&
-                Objects.equals(mobileNumber, worker.mobileNumber) &&
-                Objects.equals(address, worker.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, mobileNumber, address);
     }
 }

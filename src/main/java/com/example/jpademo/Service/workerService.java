@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class WorkerService {
+public class workerService {
 
+	private workerRepository workerRepository;
 	@Autowired
-	workerRepository workerRepository;
-
+	public void setWorkerRepository(workerRepository w){
+		this.workerRepository=w;
+	}
 	@Transactional
 	public List<Worker> getAllWorkers() {
 		return (List<Worker>) workerRepository.findAll();
@@ -32,8 +34,8 @@ public class WorkerService {
 	}
 
 	@Transactional
-	public boolean addWorker(Worker Worker) {
-		return workerRepository.save(Worker) != null;
+	public void addWorker(Worker Worker) {
+		workerRepository.save(Worker);
 	}
 
 	@Transactional
