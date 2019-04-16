@@ -16,7 +16,7 @@
                         <!-- Default panel contents -->
                         <div class="panel-heading">Edit Contact</div>
                         <div class="panel-body">
-                            <form th:action="@{/contacts/update}" th:object="${contact}" method="post">
+                            <form th:action="@{/workers/update}" th:object="${worker}" method="post">
                                 <input type="hidden" th:field="*{id}" />
                                 <div class="form-group">
                                     <label for="inputId">ID</label>
@@ -39,7 +39,7 @@
                                     <input type="text" class="form-control" id="inputAddress" placeholder="Address" th:field="*{address}" />
                                 </div>
                                 <div class="text-right">
-                                    <a href="/contacts" th:href="@{/contacts}" class="btn btn-default">Cancel</a>
+                                    <a th:href="@{/workers}" class="btn btn-default">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>

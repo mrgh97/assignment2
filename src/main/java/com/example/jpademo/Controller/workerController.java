@@ -25,7 +25,7 @@ public class workerController {
         this.workerService = workerService;
     }
 
-    @RequestMapping(value = {"","/"})
+    @RequestMapping(value = {"","/","/index"})
     public String index(Model model){
         model.addAttribute("activePage","workers");
         model.addAttribute("workers",this.workerService.getAllWorkers());
@@ -49,8 +49,32 @@ public class workerController {
         this.workerService.addWorker(worker);
         return "redirect:/workers";
     }
-    @RequestMapping("/show")
-    public String showWorkers(){
+
+    @RequestMapping(value = "/edit/{id}")
+    public String editWorker(@PathVariable Integer id,Model model){
+        model.addAttribute("worker",workerService.getById(id));
+        model.addAttribute("activePage","workers");
+        return "workerCrud/edit";
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String updateWorker(@Valid @ModelAttribute(value = "worker") Worker worker,Model model){
+        model.addAttribute("activePage","workers");
+        workerService.updateWorker(worker);
+        return  "redirect:/workers/view/"+worker.getId();
+    }
+
+    @RequestMapping(value = "/view/{id}",method = RequestMethod.GET)
+    public String viewWorker(@PathVariable Integer id,Model model){
+        model.addAttribute("worker",workerService.getById(id));
+        model.addAttribute("activePage","workers");
+        return "workerCrud/view";
+    }
+
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public String deleteWorker(@PathVariable Integer id,Model model){
+        model.addAttribute("activePage","workers");
+        workerService.deleteWorker(id);
         return "redirect:/workers";
     }
 }

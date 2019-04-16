@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Contacts - CRUD in Spring Boot with Spring Data JPA</title>
+        <title>Instructor Index</title>
         <th:block th:include="fragments/head :: head"></th:block>
     </head>
     <body>
@@ -14,7 +14,7 @@
                 <div class="col-sm-10 col-sm-offset-1">
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading">Contacts
+                        <div class="panel-heading">Instructor
                             <a th:href="@{/workers/add}" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </a>
@@ -40,9 +40,9 @@
                                     <td th:text = "${worker.address}"></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
-                                            <a th:href="${'/workerCrud/view/' + worker.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                            <a th:href="${'/workerCrud/edit/' + worker.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                            <a th:href="${'/workerCrud/delete/' + worker.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                            <a th:href="${'/workers/view/' + worker.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                            <a th:href="${'/workers/edit/' + worker.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                            <a th:href="${'/workers/delete/' + worker.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         </div>
                                     </td>
                                 </tr>

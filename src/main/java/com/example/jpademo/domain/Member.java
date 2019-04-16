@@ -15,17 +15,27 @@ public class Member implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Size(min=2,message = "First Name must be at least 2 characters.")
-    @NotEmpty(message = "First Name is required.")
-    private String firstName;
-    @Size(min = 2, message = "Last Name must be at least 2 characters.")
-    @NotEmpty(message = "Last Name is required.")
-    private String lastName;
+
+    @NotEmpty(message = "Username is required")
+    private String userName;
+    @NotEmpty(message = "Password is required.")
+    private String password;
     @Size(min = 11, max = 11, message = "Mobile no. must be 11 digits.")
     @NotEmpty(message = "Mobile no. is required.")
     private String mobileNumber;
     @NotEmpty(message = "Address is required.")
     private String address;
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -35,20 +45,20 @@ public class Member implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMobileNumber() {
@@ -65,16 +75,5 @@ public class Member implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", address='" + address + '\'' +
-                '}';
     }
 }
