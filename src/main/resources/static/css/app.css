@@ -6,3 +6,13 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+.fr {
+  float: right;
+}
+
+.dropdown_fr{
+  float: right;
+  margin-top: 15px;
+  color: cornsilk;
+}

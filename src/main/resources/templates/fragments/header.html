@@ -19,6 +19,10 @@
                         <li th:class="${activePage == 'home'}? 'active' : ''"><a href="#" th:href="@{/}">Home</a></li>
                         <li th:class="${activePage} == 'workers'? 'active' : ''"><a href="#" th:href="@{/workers}">Workers</a></li>
                     </ul>
+                    <div class="dropdown_fr">
+                        <a style="color: #dce9ff" th:if="${session.user==null}" th:href="@{/login}">Login</a>
+                        <span th:if="${session.user!=null}" th:text="${session.user.getUserName()}"></span>
+                    </div>
                 </div>
                 <!--/.nav-collapse -->
             </div>

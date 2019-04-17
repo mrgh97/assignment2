@@ -22,8 +22,14 @@ public class memberService {
     public void deleteMember(Integer id){
         mRepository.deleteById(id);
     }
-    public Boolean verifyLogin(Member member){
-        List<Member> userList=mRepository.findByUserNameAndPassword(member.getUserName(),member.getPassword());
-        return userList.size()>0;
+
+    public Member findMember(String userName){
+        Member member;
+        member=mRepository.findByUserName(userName);
+        return member;
+    }
+
+    public boolean checkLogin(String userName,String password){
+        return mRepository.findByUserNameAndPassword(userName,password).size()>0;
     }
 }
