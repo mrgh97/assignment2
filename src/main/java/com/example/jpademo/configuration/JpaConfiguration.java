@@ -19,7 +19,8 @@ public class JpaConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/workers/**").excludePathPatterns("/login");
+        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/register");
+        //registry.addInterceptor(new loginInterceptor()).addPathPatterns("/register");
         super.addInterceptors(registry);
     }
 }

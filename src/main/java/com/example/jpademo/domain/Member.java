@@ -1,26 +1,29 @@
 package com.example.jpademo.domain;
 
+import org.springframework.context.annotation.Primary;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
 public class Member implements Serializable {
 
     private static final Long serialVersionUID = 1L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Size(min = 6,message = "Username must longer than 6!")
     @NotEmpty(message = "Username is required")
     private String userName;
     @NotEmpty(message = "Password is required.")
     private String password;
 
-    private String mobileNumber="";
-    private String address="";
+    @Size(min = 11, max = 11, message = "Mobile no. must be 11 digits.")
+    @NotEmpty(message = "Mobile no. is required.")
+    private String mobileNumber;
+    @NotEmpty(message = "Address no. is required.")
+    private String address;
 
     @Override
     public String toString() {
@@ -31,7 +34,6 @@ public class Member implements Serializable {
                 ", address='" + address + '\'' +
                 '}';
     }
-
 
     public String getUserName() {
         return userName;
