@@ -59,13 +59,13 @@ public class loginController {
                            Model model,
                            HttpServletRequest request){
         if (bindingResult.hasErrors()) {
-            System.out.println("1");
             return "login/register";
         }else if(!member.getPassword().equals(rePassword)){
             model.addAttribute("errMsg","Password not true!");
             return "login/register";
         }
         else{
+            member.setSign("normal");
             mService.addMember(member);
             HttpSession session=request.getSession();
             //model.addAttribute("activePage","workers");

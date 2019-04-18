@@ -15,7 +15,7 @@
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
                         <div class="panel-heading">Instructor
-                            <a th:href="@{/workers/add}" class="btn btn-primary">
+                            <a th:if="${session.user.getSign()!='normal'}" th:href="@{/workers/add}" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </a>
                         </div>
@@ -41,8 +41,8 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
                                             <a th:href="${'/workers/view/' + worker.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                            <a th:href="${'/workers/edit/' + worker.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                            <a th:href="${'/workers/delete/' + worker.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                            <a th:if="${session.user.getSign()!='normal'}" th:href="${'/workers/edit/' + worker.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                            <a th:if="${session.user.getSign()!='normal'}" th:href="${'/workers/delete/' + worker.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         </div>
                                     </td>
                                 </tr>

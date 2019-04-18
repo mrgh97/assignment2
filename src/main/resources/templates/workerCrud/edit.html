@@ -39,7 +39,7 @@
                                     <input type="text" class="form-control" id="inputAddress" placeholder="Address" th:field="*{address}" />
                                 </div>
                                 <div class="text-right">
-                                    <a th:href="@{/workers}" class="btn btn-default">Cancel</a>
+                                    <a th:href="@{'/workers/view/'+worker.id}" class="btn btn-default">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </form>

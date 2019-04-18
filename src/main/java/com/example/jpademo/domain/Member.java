@@ -24,15 +24,25 @@ public class Member implements Serializable {
     private String mobileNumber;
     @NotEmpty(message = "Address no. is required.")
     private String address;
+    private String sign;
 
     @Override
     public String toString() {
         return "Member{" +
-                ", userName='" + userName + '\'' +
+                "userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", address='" + address + '\'' +
+                ", sign='" + sign + '\'' +
                 '}';
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public String getUserName() {
