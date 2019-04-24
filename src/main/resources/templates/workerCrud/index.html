@@ -55,10 +55,23 @@
                             </tbody>
                         </table>
                     </div>
+                    <ul class="pagination">
+                        <li th:class="${pageNum==0}?'disabled' : ''"><a th:href="${'/workers'+'?pageNum='+prePage}">&laquo;</a></li>
+                        <li th:each="pageNo : ${#numbers.sequence(0, totalPage)}" th:class="${pageNum eq pageNo}? 'active' : ''">
+                            <a th:if="${pageNum  eq pageNo}" href="#">
+                                <span th:text="${pageNo + 1}"></span>
+                            </a>
+                            <a th:if="${not (pageNum  eq pageNo)}" th:href="${'/workers'+'?pageNum='+pageNo}">
+                                <span th:text="${pageNo + 1}"></span>
+                            </a>
+                        </li>
+                        <li th:class="${totalPage==pageNum}?'disabled' : ''"><a th:href="${'/workers'+'?pageNum='+nextPage}">&raquo;</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
         <th:block th:include="fragments/js :: body"></th:block>
         <script src="../static/js/app.js" th:src="@{/js/app.js}"></script>
     </body>
+
 </html>

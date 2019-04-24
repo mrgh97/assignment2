@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("/workers")
@@ -24,9 +25,19 @@ public class workerController {
     }
 
     @RequestMapping(value = {"","/","/index"})
-    public String index(Model model){
+    public String index(Model model,@RequestParam("pageNum") Integer pageNum){
         model.addAttribute("activePage","workers");
-        model.addAttribute("workers",this.workerService.getAllWorkers());
+        model.addAttribute("totalPage",(this.workerService.getAll().size()/5));
+        System.out.println((this.workerService.getAll().size()/5));
+        Iterator<Worker> iterator=this.workerService.getAll().iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+        System.out.println("page number is :"+pageNum);
+        model.addAttribute("pageNum",pageNum);
+        model.addAttribute("nextPage",pageNum+1);
+        model.addAttribute("prePage",pageNum-1);
+        model.addAttribute("workers",this.workerService.getAllWorkers(pageNum));
         return "workerCrud/index";
     }
 
