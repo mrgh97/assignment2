@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Worker implements Serializable {
@@ -25,6 +26,17 @@ public class Worker implements Serializable {
     private String mobileNumber;
     @NotEmpty(message = "Address is required.")
     private String address;
+
+    @OneToMany(mappedBy = "worker")
+    private Set<MemberWorker> memberWorkers;
+
+    public Set<MemberWorker> getMemberWorkers() {
+        return memberWorkers;
+    }
+
+    public void setMemberWorkers(Set<MemberWorker> memberWorkers) {
+        this.memberWorkers = memberWorkers;
+    }
 
     public Integer getId() {
         return id;

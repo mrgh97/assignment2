@@ -2,11 +2,14 @@ package com.example.jpademo.domain;
 
 import org.springframework.context.annotation.Primary;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Member implements Serializable {
@@ -25,6 +28,9 @@ public class Member implements Serializable {
     @NotEmpty(message = "Address no. is required.")
     private String address;
     private String sign;
+
+    @OneToOne(mappedBy = "member")
+    private MemberWorker memberWorker;
 
     @Override
     public String toString() {
@@ -75,5 +81,17 @@ public class Member implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public static Long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public MemberWorker getMemberWorker() {
+        return memberWorker;
+    }
+
+    public void setMemberWorker(MemberWorker memberWorker) {
+        this.memberWorker = memberWorker;
     }
 }

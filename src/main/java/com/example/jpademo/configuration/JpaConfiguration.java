@@ -21,7 +21,7 @@ public class JpaConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(new loginInterceptor()).addPathPatterns("/worker**");
         registry.addInterceptor(new loginInterceptor()).addPathPatterns("/members**");
-        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/");
+        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/register");
         super.addInterceptors(registry);
     }
 }

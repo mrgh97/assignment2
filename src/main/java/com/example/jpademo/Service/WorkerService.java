@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.jpademo.domain.Worker;
-import com.example.jpademo.repository.workerRepository;
+import com.example.jpademo.repository.WorkerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class workerService {
+public class WorkerService {
 
-	private workerRepository workerRepository;
+	private WorkerRepository workerRepository;
 	@Autowired
-	public void setWorkerRepository(workerRepository w){
+	public void setWorkerRepository(WorkerRepository w){
 		this.workerRepository=w;
 	}
 //	@Transactional

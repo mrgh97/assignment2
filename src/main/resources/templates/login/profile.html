@@ -26,7 +26,16 @@
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Address</label>
-                        <span class="form-control" id="inputAddress" th:field="*{session.user.getAddress()}" disabled="disabled"></span>
+                        <span class="form-control" id="inputAddress" th:text="${session.user.getAddress()}" disabled="disabled"></span>
+                    </div>
+                    <div class="form-group" th:if="${session.user.getSign()=='normal'}">
+                        <label for="inputWorker">Coach</label>
+                        <div  th:if="${session.user.getMemberWorker()!=null}">
+                            <span class="form-control" id="inputWorker" th:text="${session.user.getMemberWorker().getWorker().getFirstName()}+${session.user.getMemberWorker().getWorker().getLastName()}" disabled="disabled"></span>
+                        </div>
+                        <div th:if="${session.user.getMemberWorker()==null}">
+                            <a th:text="'Click here to select a coach'" th:href="${'/workers'+'?pageNum=0'}"></a>
+                        </div>
                     </div>
                     <!--<div class="text-right">-->
                         <!--<a th:href="@{'/userCenter/edit/' + ${session.user.getUserName()}}" class="btn btn-primary">Edit</a>-->

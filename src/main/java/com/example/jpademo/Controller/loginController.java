@@ -1,6 +1,6 @@
 package com.example.jpademo.Controller;
 
-import com.example.jpademo.Service.memberService;
+import com.example.jpademo.Service.MemberService;
 import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import javax.validation.Valid;
 
 @Controller
 public class loginController {
-    private memberService mService;
+    private MemberService mService;
 
     @Autowired
-    public void setmService(memberService m){
+    public void setmService(MemberService m){
         this.mService=m;
     }
 
@@ -82,6 +82,12 @@ public class loginController {
     @RequestMapping(value = "/userCenter",method = RequestMethod.GET)
     public String profile(){
         return "login/profile";
+    }
+    @GetMapping("/logOut")
+    public String logOut(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        session.removeAttribute("user");
+        return "login/loginIndex";
     }
 //    @RequestMapping("/userCenter/edit/{userName}")
 //    public String userEdit(@PathVariable String userName){

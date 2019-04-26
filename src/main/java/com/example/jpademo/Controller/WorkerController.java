@@ -1,8 +1,8 @@
 package com.example.jpademo.Controller;
 
-import com.example.jpademo.Service.workerService;
+import com.example.jpademo.Service.WorkerService;
 import com.example.jpademo.domain.Worker;
-import com.example.jpademo.repository.workerRepository;
+import com.example.jpademo.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -15,25 +15,19 @@ import java.util.Iterator;
 
 @Controller
 @RequestMapping("/workers")
-public class workerController {
+public class WorkerController {
 
-    private workerService workerService;
+    private WorkerService workerService;
 
     @Autowired
-    public void setWorkerService(workerService workerService) {
+    public void setWorkerService(WorkerService workerService) {
         this.workerService = workerService;
     }
 
     @RequestMapping(value = {"","/","/index"})
-    public String index(Model model,@RequestParam("pageNum") Integer pageNum){
+    public String index(Model model,@RequestParam(value = "pageNum",defaultValue = "0") Integer pageNum){
         model.addAttribute("activePage","workers");
         model.addAttribute("totalPage",(this.workerService.getAll().size()/5));
-        System.out.println((this.workerService.getAll().size()/5));
-        Iterator<Worker> iterator=this.workerService.getAll().iterator();
-        while(iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
-        System.out.println("page number is :"+pageNum);
         model.addAttribute("pageNum",pageNum);
         model.addAttribute("nextPage",pageNum+1);
         model.addAttribute("prePage",pageNum-1);
