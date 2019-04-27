@@ -35,7 +35,9 @@
                             <td th:text = "${member.mobileNumber}"></td>
                             <td th:text = "${member.address}"></td>
                             <td th:text = "${member.sign}"></td>
-                            <td th:each="worker : ${member.getWorkers()}" th:text="${worker.getFirstName()}+${worker.getLastName()}+'  '"></td>
+                            <td>
+                                <a th:href="@{${'/workers/view/' + worker.id}}" th:each="worker : ${member.getWorkers()}" th:text="${worker.getFirstName()}+${worker.getLastName()}+'  '"></a>
+                            </td>
                         </tr>
                     </div>
                     </tbody>
