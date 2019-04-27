@@ -39,7 +39,7 @@
                             <div class="text-right">
                                 <a th:href="@{/workers/index}" class="btn btn-default">Back</a>
                                 <a th:if="${session.user.getSign()!='normal'}" th:href="@{'/workers/edit/' + ${worker.id}}" class="btn btn-primary">Edit</a>
-                                <a th:if="${session.user.getSign()=='normal'&&session.user.getMemberWorker()==null}" th:href="@{'/member/select/'+${worker.id}}" class="btn btn-primary">Select</a>
+                                <a th:if="${session.user.getSign()=='normal'}" th:href="@{'/member/select/'+${worker.id}}" class="btn btn-primary">Select</a>
                             </div>
                         </div>
                         <div class="panel-footer">

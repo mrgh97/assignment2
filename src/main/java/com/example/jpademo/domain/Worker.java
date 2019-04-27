@@ -4,8 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Worker implements Serializable {
@@ -27,15 +28,18 @@ public class Worker implements Serializable {
     @NotEmpty(message = "Address is required.")
     private String address;
 
-    @OneToMany(mappedBy = "worker")
-    private Set<MemberWorker> memberWorkers;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "member_worker",
+                            joinColumns = @JoinColumn(name="worker_id"),
+                            inverseJoinColumns = @JoinColumn(name = "member_id"))
+    private List<Member> members=new ArrayList<>();
 
-    public Set<MemberWorker> getMemberWorkers() {
-        return memberWorkers;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setMemberWorkers(Set<MemberWorker> memberWorkers) {
-        this.memberWorkers = memberWorkers;
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 
     public Integer getId() {

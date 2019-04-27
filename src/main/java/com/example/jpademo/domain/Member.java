@@ -2,20 +2,22 @@ package com.example.jpademo.domain;
 
 import org.springframework.context.annotation.Primary;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity
 public class Member implements Serializable {
 
     private static final Long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Size(min = 6,message = "Username must longer than 6!")
     @NotEmpty(message = "Username is required")
     private String userName;
@@ -28,9 +30,27 @@ public class Member implements Serializable {
     @NotEmpty(message = "Address no. is required.")
     private String address;
     private String sign;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "member_worker",
+            joinColumns = @JoinColumn(name="member_id"),
+            inverseJoinColumns = @JoinColumn(name = "worker_id"))
+    private List<Worker> workers=new ArrayList<>();
 
-    @OneToOne(mappedBy = "member")
-    private MemberWorker memberWorker;
+    public List<Worker> getWorkers() {
+        return workers;
+    }
+
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -87,11 +107,4 @@ public class Member implements Serializable {
         return serialVersionUID;
     }
 
-    public MemberWorker getMemberWorker() {
-        return memberWorker;
-    }
-
-    public void setMemberWorker(MemberWorker memberWorker) {
-        this.memberWorker = memberWorker;
-    }
 }

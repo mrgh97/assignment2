@@ -2,8 +2,11 @@ package com.example.jpademo.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
 import com.example.jpademo.repository.WorkerRepository;
 
@@ -24,10 +27,6 @@ public class WorkerService {
 	public void setWorkerRepository(WorkerRepository w){
 		this.workerRepository=w;
 	}
-//	@Transactional
-//	public List<Worker> getAllWorkers() {
-//		return (List<Worker>) workerRepository.findAll();
-//	}
 
 	@Transactional
 	public Worker getById(Integer id) {
@@ -60,5 +59,12 @@ public class WorkerService {
 	@Transactional
 	public List<Worker> getAll() {
 		return this.workerRepository.findAll();
+	}
+
+	public void addMember(Member member,Integer workerId){
+		Worker worker = workerRepository.findWorkerById(workerId);
+		List<Member> memberList=worker.getMembers();
+		memberList.add(member);
+		worker.setMembers(memberList);
 	}
 }
