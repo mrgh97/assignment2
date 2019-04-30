@@ -21,34 +21,44 @@ public class MemberService {
     private WorkerRepository workerRepository;
 
     @Autowired
-    public void setmRepository(MemberRepository m){
-        this.mRepository=m;
+    public void setmRepository(MemberRepository m) {
+        this.mRepository = m;
     }
+
     @Autowired
-    public void setWorkerRepository(WorkerRepository workerRepository){this.workerRepository=workerRepository;}
+    public void setWorkerRepository(WorkerRepository workerRepository) {
+        this.workerRepository = workerRepository;
+    }
+
     @Transactional
-    public void addMember(Member member){
+    public void addMember(Member member) {
         mRepository.save(member);
     }
+
     @Transactional
-    public boolean  updateMember(Member member){return mRepository.save(member)!=null;}
+    public boolean updateMember(Member member) {
+        return mRepository.save(member) != null;
+    }
+
     @Transactional
-    public void deleteMember(Integer id){
+    public void deleteMember(Integer id) {
         mRepository.deleteById(id);
     }
+
     @Transactional
-    public Member findMember(String userName){
+    public Member findMember(String userName) {
         Member member;
-        member=mRepository.findByUserName(userName);
+        member = mRepository.findByUserName(userName);
         return member;
     }
+
     @Transactional
-    public boolean checkLogin(String userName,String password){
-        return mRepository.findByUserNameAndPassword(userName,password).size()>0;
+    public boolean checkLogin(String userName, String password) {
+        return mRepository.findByUserNameAndPassword(userName, password).size() > 0;
     }
 
     public void addWorker(Member member, Integer workerId) {
-        List<Worker> workers=member.getWorkers();
+        List<Worker> workers = member.getWorkers();
         workers.add(this.workerRepository.findWorkerById(workerId));
         member.setWorkers(workers);
         this.updateMember(member);
@@ -59,8 +69,8 @@ public class MemberService {
     }
 
     public Page<Member> getMembers(Integer pageNum) {
-        Sort sort = new Sort(Sort.Direction.ASC,"id");
-        Pageable pageable=new PageRequest(pageNum,5,sort);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest(pageNum, 5, sort);
         return this.mRepository.findAll(pageable);
     }
 }
