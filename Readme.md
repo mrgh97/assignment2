@@ -1,5 +1,9 @@
 # Readme
 
+##Group Members
+16301095 李星原
+16301099 莫日根呼
+
 ### 1.use SpringMVC
 
 ### 2.use JPA 
