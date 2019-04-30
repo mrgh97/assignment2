@@ -15,11 +15,9 @@ public class loginInterceptor implements HandlerInterceptor {
                              HttpServletResponse response, Object handler) throws IOException {
         HttpSession session=request.getSession();
         if(session.getAttribute(Session_Key)!=null){
-            System.out.println(session.getAttribute(Session_Key));
             return true;
         }else{
             String url="/login";
-            System.out.println("拦截");
             response.sendRedirect(url);
             return false;
         }

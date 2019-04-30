@@ -51,7 +51,7 @@ public class WorkerService {
 	@Transactional
 	public Page<Worker> getAllWorkers(Integer pageNum){
 		Sort sort = new Sort(Sort.Direction.ASC,"id");
-		Pageable pageable=new PageRequest(pageNum,5,sort);
+		Pageable pageable=new PageRequest(pageNum,2,sort);
 
 		return this.workerRepository.findAll(pageable);
 	}
