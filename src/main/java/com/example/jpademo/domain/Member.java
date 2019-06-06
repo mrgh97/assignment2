@@ -1,5 +1,6 @@
 package com.example.jpademo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
@@ -15,25 +16,32 @@ import java.util.List;
 public class Member implements Serializable {
 
     private static final Long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Size(min = 6,message = "Username must longer than 6!")
     @NotEmpty(message = "Username is required")
     private String userName;
+
     @NotEmpty(message = "Password is required.")
     private String password;
 
     @Size(min = 11, max = 11, message = "Mobile no. must be 11 digits.")
     @NotEmpty(message = "Mobile no. is required.")
     private String mobileNumber;
+
     @NotEmpty(message = "Address no. is required.")
     private String address;
+
     private String sign;
+
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "member_worker",
             joinColumns = @JoinColumn(name="member_id"),
             inverseJoinColumns = @JoinColumn(name = "worker_id"))
+    @JsonIgnoreProperties("members")
     private List<Worker> workers=new ArrayList<>();
 
     public List<Worker> getWorkers() {

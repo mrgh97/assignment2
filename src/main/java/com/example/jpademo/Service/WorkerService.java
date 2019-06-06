@@ -2,9 +2,6 @@ package com.example.jpademo.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
@@ -57,8 +54,8 @@ public class WorkerService {
 	}
 
 	@Transactional
-	public List<Worker> getAll() {
-		return this.workerRepository.findAll();
+	public Page<Worker> getAll(Pageable pageable) {
+		return this.workerRepository.findAll(pageable);
 	}
 
 	public void addMember(Member member,Integer workerId){
@@ -67,4 +64,5 @@ public class WorkerService {
 		memberList.add(member);
 		worker.setMembers(memberList);
 	}
+
 }

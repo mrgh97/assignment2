@@ -1,26 +1,33 @@
 package com.example.jpademo.Controller;
 
 
+import com.example.jpademo.Controller.util.HeaderUtil;
+import com.example.jpademo.Controller.util.PaginationUtil;
 import com.example.jpademo.Service.MemberService;
 import com.example.jpademo.Service.WorkerService;
 import com.example.jpademo.domain.Member;
+import com.example.jpademo.domain.Worker;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.service.Header;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.List;
 
-@Controller
-@RequestMapping("/member")
+@Api
+@RestController
+@RequestMapping("/api/member")
 public class MemberController {
 
     private MemberService memberService;
@@ -41,36 +48,31 @@ public class MemberController {
 
     private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
-    @RequestMapping(value = {"", "/", "/index"})
-    public String getMemberAndWorkers(Model model, @RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum) {
+    @GetMapping("")
+    public ResponseEntity<List<Member>> getMemberAndWorkers(@RequestParam(name = "page", defaultValue = "1") int page) {
         log.debug("Get all members.");
-        if(redisTemplate.opsForValue().get("members"+"_"+pageNum)!=null){
-            model.addAttribute("members",redisTemplate.opsForValue().get("members"+"_"+pageNum));
-            model.addAttribute("activePage", "members");
-            model.addAttribute("totalPage", redisTemplate.opsForValue().get("member_total_page"));
-            model.addAttribute("pageNum", pageNum);
-            model.addAttribute("nextPage", pageNum + 1);
-            model.addAttribute("prePage", pageNum - 1);
-            System.out.println();
-        }else{
-            model.addAttribute("activePage", "members");
-            model.addAttribute("totalPage", (this.memberService.findAll().size() / 5));
-            model.addAttribute("pageNum", pageNum);
-            model.addAttribute("nextPage", pageNum + 1);
-            model.addAttribute("prePage", pageNum - 1);
-            model.addAttribute("members", this.memberService.getMembers(pageNum));
-            redisTemplate.opsForValue().set("members"+"_"+pageNum, this.memberService.getMembers(pageNum));
-            redisTemplate.opsForValue().set("member_total_page", (this.memberService.findAll().size() / 5));
+        Pageable pageable = new PageRequest(page - 1, 5);
+        Page<Member> members;
+        System.out.println(pageable.getPageSize());
+        if (redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber()) != null) {
+            members = (Page<Member>) redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber());
+        } else {
+            members = this.memberService.getMembers(pageable);
+            redisTemplate.opsForValue().set("members" + "_" + pageable.getPageNumber(), members);
         }
 
-        return "member/index";
+        return ResponseEntity.ok()
+                .headers(PaginationUtil.generatePaginationHttpHeaders(members, "/api/members"))
+                .body(members.getContent());
     }
 
     @GetMapping("/select/{workerId}")
-    public String selectWorker(@PathVariable Integer workerId, HttpServletRequest request) {
+    public ResponseEntity<Worker> selectWorker(@PathVariable Integer workerId, HttpServletRequest request) {
         Member member = (Member) request.getSession().getAttribute("user");
         this.memberService.addWorker(member, workerId);
-        this.workerService.addMember(member, workerId);
-        return "login/profile";
+        //this.workerService.addMember(member, workerId);
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createAlert("Select a worker successfully!", member.getUserName()))
+                .body(this.workerService.getById(workerId));
     }
 }

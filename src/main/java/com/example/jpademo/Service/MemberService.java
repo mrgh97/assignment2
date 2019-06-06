@@ -64,13 +64,11 @@ public class MemberService {
         this.updateMember(member);
     }
 
-    public List<Member> findAll() {
-        return this.mRepository.findAll();
+    public Page<Member> getMembers(Pageable pageable) {
+        return this.mRepository.findAll(pageable);
     }
 
-    public Page<Member> getMembers(Integer pageNum) {
-        Sort sort = new Sort(Sort.Direction.ASC, "id");
-        Pageable pageable = new PageRequest(pageNum, 5, sort);
-        return this.mRepository.findAll(pageable);
+    public int getMembersNumber() {
+        return this.mRepository.findAll().size();
     }
 }

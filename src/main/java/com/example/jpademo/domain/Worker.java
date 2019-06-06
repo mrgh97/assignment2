@@ -1,5 +1,7 @@
 package com.example.jpademo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,25 +16,30 @@ public class Worker implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id ;
-    @Size(min=2,message = "First Name must be at least 2 characters.")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Size(min = 2, message = "First Name must be at least 2 characters.")
     @NotEmpty(message = "First Name is required.")
     private String firstName;
+
     @Size(min = 2, message = "Last Name must be at least 2 characters.")
     @NotEmpty(message = "Last Name is required.")
     private String lastName;
+
     @Size(min = 11, max = 11, message = "Mobile no. must be 11 digits.")
     @NotEmpty(message = "Mobile no. is required.")
     private String mobileNumber;
+
     @NotEmpty(message = "Address is required.")
     private String address;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "member_worker",
-                            joinColumns = @JoinColumn(name="worker_id"),
-                            inverseJoinColumns = @JoinColumn(name = "member_id"))
-    private List<Member> members=new ArrayList<>();
+            joinColumns = @JoinColumn(name = "worker_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id"))
+    @JsonIgnoreProperties("workers")
+    private List<Member> members = new ArrayList<>();
 
     public List<Member> getMembers() {
         return members;
