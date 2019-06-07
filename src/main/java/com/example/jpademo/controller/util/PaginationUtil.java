@@ -1,4 +1,4 @@
-package com.example.jpademo.Controller.util;
+package com.example.jpademo.controller.util;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;

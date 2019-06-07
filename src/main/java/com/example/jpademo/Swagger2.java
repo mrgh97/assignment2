@@ -21,16 +21,16 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.jpademo.Controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.jpademo.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("springboot利用swagger构建api文档")
-                .description("简单优雅的restfun风格，http://blog.csdn.net/saytime")
-                .termsOfServiceUrl("http://blog.csdn.net/saytime")
+                .title("体育馆管理系统swagger的api文档")
+                .description("简单优雅的restfun风格")
+                .termsOfServiceUrl("www.github.com/mrgh97")
                 .version("1.0")
                 .build();
     }

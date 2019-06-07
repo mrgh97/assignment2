@@ -1,10 +1,10 @@
-package com.example.jpademo.Controller;
+package com.example.jpademo.controller;
 
 
-import com.example.jpademo.Controller.util.HeaderUtil;
-import com.example.jpademo.Controller.util.PaginationUtil;
-import com.example.jpademo.Service.MemberService;
-import com.example.jpademo.Service.WorkerService;
+import com.example.jpademo.controller.util.HeaderUtil;
+import com.example.jpademo.controller.util.PaginationUtil;
+import com.example.jpademo.service.MemberService;
+import com.example.jpademo.service.WorkerService;
 import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
 import io.swagger.annotations.Api;
@@ -15,15 +15,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.service.Header;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Api
 @RestController
@@ -53,15 +52,16 @@ public class MemberController {
         log.debug("Get all members.");
         Pageable pageable = new PageRequest(page - 1, 5);
         Page<Member> members;
-        System.out.println(pageable.getPageSize());
-        if (redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber()) != null) {
-            members = (Page<Member>) redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber());
-        } else {
-            members = this.memberService.getMembers(pageable);
-            redisTemplate.opsForValue().set("members" + "_" + pageable.getPageNumber(), members);
-        }
+        CacheControl cacheControl = CacheControl.maxAge(30, TimeUnit.MINUTES);
+//        if (redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber()) != null) {
+//            members = (Page<Member>) redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber());
+//        } else {
+        members = this.memberService.getMembers(pageable);
+//            redisTemplate.opsForValue().set("members" + "_" + pageable.getPageNumber(), members);
+//        }
 
         return ResponseEntity.ok()
+                .cacheControl(cacheControl)
                 .headers(PaginationUtil.generatePaginationHttpHeaders(members, "/api/members"))
                 .body(members.getContent());
     }

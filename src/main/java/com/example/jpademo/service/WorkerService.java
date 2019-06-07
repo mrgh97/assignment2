@@ -1,6 +1,5 @@
-package com.example.jpademo.Service;
+package com.example.jpademo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.jpademo.domain.Member;

@@ -1,4 +1,4 @@
-package com.example.jpademo.Controller.util;
+package com.example.jpademo.controller.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

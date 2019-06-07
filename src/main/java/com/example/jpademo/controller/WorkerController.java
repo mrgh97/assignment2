@@ -1,36 +1,28 @@
-package com.example.jpademo.Controller;
+package com.example.jpademo.controller;
 
-import com.example.jpademo.Controller.util.HeaderUtil;
-import com.example.jpademo.Controller.util.PaginationUtil;
-import com.example.jpademo.Service.WorkerService;
-import com.example.jpademo.domain.Member;
+import com.example.jpademo.controller.util.HeaderUtil;
+import com.example.jpademo.controller.util.PaginationUtil;
+import com.example.jpademo.service.WorkerService;
 import com.example.jpademo.domain.Worker;
-import com.example.jpademo.repository.WorkerRepository;
 import io.swagger.annotations.Api;
-import org.apache.tomcat.util.http.ResponseUtil;
-import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Api
 @RestController
@@ -56,14 +48,19 @@ public class WorkerController {
         log.debug("REST request to get a page of Employees");
         Pageable pageable=new PageRequest(page,5);
         Page<Worker> workers;
-        if (redisTemplate.opsForValue().get("worker_" + pageable.getPageNumber()) == null) {
+        CacheControl cacheControl = CacheControl.maxAge(30, TimeUnit.MINUTES);
+
+//        if (redisTemplate.opsForValue().get("worker_" + pageable.getPageNumber()) == null) {
             workers = workerService.getAll(pageable);
-            redisTemplate.opsForValue().set("worker_"+pageable.getPageNumber(),workers);
-        } else {
-            workers  = (Page<Worker>) redisTemplate.opsForValue().get("worker_"+pageable.getPageNumber());
-        }
+//            redisTemplate.opsForValue().set("worker_"+pageable.getPageNumber(),workers);
+ //       } else {
+//            workers  = (Page<Worker>) redisTemplate.opsForValue().get("worker_"+pageable.getPageNumber());
+ //       }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(workers, "/api/workers");
-        return ResponseEntity.ok().headers(headers).body(workers.getContent());
+        return ResponseEntity.ok()
+                .cacheControl(cacheControl)
+                .headers(headers).
+                body(workers.getContent());
     }
 
     @PostMapping(value = "/add")

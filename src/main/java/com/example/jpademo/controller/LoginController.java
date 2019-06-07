@@ -1,14 +1,12 @@
-package com.example.jpademo.Controller;
+package com.example.jpademo.controller;
 
-import com.example.jpademo.Controller.util.HeaderUtil;
-import com.example.jpademo.Service.MemberService;
+import com.example.jpademo.controller.util.HeaderUtil;
+import com.example.jpademo.service.MemberService;
 import com.example.jpademo.domain.Member;
-import com.example.jpademo.domain.Worker;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.net.URISyntaxException;
 
 @Api
 @RestController

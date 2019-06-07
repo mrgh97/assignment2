@@ -1,4 +1,4 @@
-package com.example.jpademo.Service;
+package com.example.jpademo.service;
 
 import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
@@ -6,9 +6,7 @@ import com.example.jpademo.repository.MemberRepository;
 import com.example.jpademo.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
