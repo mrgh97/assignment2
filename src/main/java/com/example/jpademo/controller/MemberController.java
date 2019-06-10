@@ -8,6 +8,8 @@ import com.example.jpademo.service.WorkerService;
 import com.example.jpademo.domain.Member;
 import com.example.jpademo.domain.Worker;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class MemberController {
 
     private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
+    @ApiOperation("查看成员列表")
+    @ApiImplicitParam(name = "page",value = "页码,每页5个成员")
     @GetMapping("")
     public ResponseEntity<List<Member>> getMemberAndWorkers(@RequestParam(name = "page", defaultValue = "1") int page) {
         log.debug("Get all members.");
@@ -66,6 +70,8 @@ public class MemberController {
                 .body(members.getContent());
     }
 
+    @ApiOperation("选择教练")
+    @ApiImplicitParam(name = "workerId",value = "教练Id")
     @GetMapping("/select/{workerId}")
     public ResponseEntity<Worker> selectWorker(@PathVariable Integer workerId, HttpServletRequest request) {
         Member member = (Member) request.getSession().getAttribute("user");

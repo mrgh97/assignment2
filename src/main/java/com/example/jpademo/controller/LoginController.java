@@ -4,6 +4,9 @@ import com.example.jpademo.controller.util.HeaderUtil;
 import com.example.jpademo.service.MemberService;
 import com.example.jpademo.domain.Member;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class LoginController {
      * @param password
      * @return the ResponseEntity with status 201 (Created) and with body the new videoDTO, or with status 400 (Bad Request) if the video has already an ID
      */
+    @ApiOperation("验证登录信息")
+    @ApiImplicitParams({@ApiImplicitParam(dataType = "String",name = "userName",value = "用户名",required = true),
+                                            @ApiImplicitParam(dataType = "String",name = "password",value = "密码",required = true)})
     @PostMapping(value = "/login")
     public ResponseEntity<Member> verifyLogin(@RequestParam("userName") String userName,
                                             @RequestParam("password") String password,
@@ -57,6 +63,7 @@ public class LoginController {
         return ResponseEntity.badRequest().headers(HeaderUtil.createAlert("Username or password error", userName)).build();
     }
 
+    @ApiOperation("注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<Member> register(@Valid @ModelAttribute(value = "member") Member member,
                            BindingResult bindingResult,
@@ -77,6 +84,7 @@ public class LoginController {
         }
     }
 
+    @ApiOperation("登出")
     @GetMapping("/logOut")
     public void logOut(HttpServletRequest request) {
         log.debug("Rest request to logout");

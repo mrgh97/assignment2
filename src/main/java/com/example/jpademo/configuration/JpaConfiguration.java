@@ -27,6 +27,7 @@ public class JpaConfiguration extends WebMvcConfigurationSupport {
         // 注册Spring data jpa pageable的参数分解器
         argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
     }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
@@ -47,10 +48,9 @@ public class JpaConfiguration extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
     }
+
     @Override
     public void configureDefaultServletHandling( DefaultServletHandlerConfigurer configurer) {
-
         configurer.enable();
-
     }
 }

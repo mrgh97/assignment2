@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.EnableCaching;
 public class JpademoApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(JpademoApplication.class, args);
     }
 

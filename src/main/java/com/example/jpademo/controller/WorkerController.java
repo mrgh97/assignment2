@@ -5,6 +5,8 @@ import com.example.jpademo.controller.util.PaginationUtil;
 import com.example.jpademo.service.WorkerService;
 import com.example.jpademo.domain.Worker;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class WorkerController {
         this.workerService = workerService;
     }
 
+    @ApiOperation("查看教练列表")
+    @ApiImplicitParam(name = "page",value = "页码,每页5个成员")
     @GetMapping("/index")
     public ResponseEntity<List<Worker>> getAllWorkers(@RequestParam(name = "page", defaultValue = "1") int page) {
         log.debug("REST request to get a page of Employees");
@@ -63,6 +67,7 @@ public class WorkerController {
                 body(workers.getContent());
     }
 
+    @ApiOperation("添加教练信息")
     @PostMapping(value = "/add")
     public ResponseEntity<Worker> addWorker(@RequestBody Worker worker, BindingResult bindingResult) throws URISyntaxException {
         if (bindingResult.hasErrors()) {
@@ -84,6 +89,7 @@ public class WorkerController {
 //        return "workerCrud/edit";
 //    }
 
+    @ApiOperation("更新教练信息")
     @PostMapping("/update")
     public ResponseEntity<Worker> updateWorker(@RequestBody Worker worker) throws URISyntaxException {
         log.debug("Rest to update workers.");
@@ -93,6 +99,8 @@ public class WorkerController {
                 .body(worker);
     }
 
+    @ApiOperation("通过Id查看教练信息")
+    @ApiImplicitParam(name = "id",value = "id")
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public ResponseEntity<Worker> viewWorker(@PathVariable Integer id) {
         if (workerService.getById(id) == null) {
@@ -101,6 +109,8 @@ public class WorkerController {
         return ResponseEntity.ok().body(workerService.getById(id));
     }
 
+    @ApiOperation("删除教练信息")
+    @ApiImplicitParam(name = "page",value = "页码,每页5个成员")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ResponseEntity<Void> deleteWorker(@PathVariable Integer id) {
         workerService.deleteWorker(id);
