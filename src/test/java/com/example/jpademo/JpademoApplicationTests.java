@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -14,13 +15,7 @@ public class JpademoApplicationTests {
 
     @Test
     public void contextLoads() {
-    }
-
-    @Autowired
-    private JpaRepository jpaRepository;
-
-    @Test
-    public void insert() {
+        System.out.println(new BCryptPasswordEncoder().encode("secret"));
     }
 
 }

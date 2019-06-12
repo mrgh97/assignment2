@@ -28,15 +28,15 @@ public class JpaConfiguration extends WebMvcConfigurationSupport {
         argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-
-        registry.addViewController("/").setViewName("/login/LoginIndex");
-
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-
-        super.addViewControllers(registry);
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//
+//        registry.addViewController("/").setViewName("/login/LoginIndex");
+//
+//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//
+//        super.addViewControllers(registry);
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

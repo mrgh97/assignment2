@@ -45,9 +45,7 @@ public class MemberService {
 
     @Transactional
     public Member findMember(String userName) {
-        Member member;
-        member = mRepository.findByUserName(userName);
-        return member;
+        return mRepository.findByUserName(userName);
     }
 
     @Transactional
