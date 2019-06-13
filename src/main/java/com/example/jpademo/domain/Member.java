@@ -1,7 +1,9 @@
 package com.example.jpademo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.context.annotation.Primary;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +14,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Entity Member
+ */
 @Entity
 public class Member implements Serializable {
 
@@ -25,6 +30,7 @@ public class Member implements Serializable {
     @NotEmpty(message = "Username is required")
     private String userName;
 
+    @JsonIgnore
     @NotEmpty(message = "Password is required.")
     private String password;
 

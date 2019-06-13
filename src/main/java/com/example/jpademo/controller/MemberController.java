@@ -10,6 +10,7 @@ import com.example.jpademo.domain.Worker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +64,13 @@ public class MemberController {
 //            members = (Page<Member>) redisTemplate.opsForValue().get("members" + "_" + pageable.getPageNumber());
 //        } else {
         members = this.memberService.getMembers(pageable);
+
+        Link selfLink = ControllerLinkBuilder.linkTo(ControllerLinkBuilder
+        .methodOn(MemberController.class).getMemberAndWorkers(page))
+                .withSelfRel();
 //            redisTemplate.opsForValue().set("members" + "_" + pageable.getPageNumber(), members);
 //        }
+
 
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
