@@ -110,7 +110,7 @@ public class Worker implements Serializable {
 
 
 
-![domains](/home/mrgh1997/IdeaProjects/assignment2/src/img/domains.png)
+![domains](src/img/domains.png)
 
 ## 3.Restful Services
 
@@ -183,7 +183,7 @@ public ResponseEntity<List<Worker>> getAllWorkers(@RequestParam(name = "page", d
 
 Swagger2:
 
-![Swagger](/home/mrgh1997/IdeaProjects/assignment2/src/img/Swagger.png)
+![Swagger](src/img/Swagger.png)
 
 ## 6.Hateaos
 
